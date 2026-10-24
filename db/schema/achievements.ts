@@ -23,7 +23,7 @@ export const achievementsRelation = relations(achievements, ({ many }) => ({
 }));
 
 export const userAchievementsRelations = relations(userAchievements, ({ one }) => ({
-    user: one(users, {
+    user: one(users, { //a user can have many achievements
         fields: [userAchievements.userId],
         references: [users.id],
     }
