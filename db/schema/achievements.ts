@@ -14,17 +14,17 @@ export const achievements = pgTable("achievements", {
 export const userAchievements = pgTable("user_achievements", {
     id: text("id").primaryKey().default(sql`gen_random_uuid()`),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    achievementId: text("achievements_id").notNull(),
+    achievementId: text("achievement_id").notNull().references(() => achievements.id, { onDelete: "cascade" }),
     earnedAt: timestamp("earned_at").defaultNow().notNull(),
 }, (table) => {
     return {
-        uniqueUserAchievement: uniqueIndex("unique_user_index_idx")
+        uniqueUserAchievement: uniqueIndex("unique_user_achievement_idx")
             .on(table.userId, table.achievementId),
     };
 },);
 
 //a user can have many achievements
-export const achievementsRelation = relations(achievements, ({ many }) => ({
+export const achievementsRelations = relations(achievements, ({ many }) => ({
     users: many(userAchievements),
 }));
 
