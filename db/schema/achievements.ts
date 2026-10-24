@@ -1,5 +1,5 @@
 import { pgTable, text, integer, timestamp, json, uniqueIndex } from "drizzle-orm/pg-core";
-import { relations, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { users } from "./users";
 
 export const achievements = pgTable("achievements", {

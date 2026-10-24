@@ -1,6 +1,9 @@
-import { timeStamp } from "console";
-import { sql } from "drizzle-orm";
+//import { timeStamp } from "console";
+import { relations, sql } from "drizzle-orm";
 import { integer, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { userAchievements } from "./achievements";
+import { enrollments } from "./enrollments";
+import { progress } from "./progress";
 
 export const users = pgTable("users", {
     id: text("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -24,3 +27,4 @@ export const users = pgTable("users", {
     }
 }
 )
+
