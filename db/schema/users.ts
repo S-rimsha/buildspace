@@ -28,3 +28,8 @@ export const users = pgTable("users", {
 }
 )
 
+export const userRelations = relations(users, ({ many }) => ({
+    achievements: many(userAchievements),
+    enrollments: many(enrollments),
+    progress: many(progress),
+}));

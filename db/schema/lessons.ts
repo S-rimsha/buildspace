@@ -13,3 +13,10 @@ export const lessons = pgTable("lessons", {
     createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const lessonsRelations = relations(lessons, ({ one, many }) => ({
+    course: one(courses, {
+        fields: [lessons.courseId],
+        references: [courses.id],
+    }),
+    progress: many(progress)
+}))

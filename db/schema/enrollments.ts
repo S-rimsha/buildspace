@@ -11,3 +11,14 @@ export const enrollments = pgTable("enrollments", {
     completed: boolean("completed").default(false).notNull(),
     conpletedAt: timestamp("completed_at")
 })
+
+export const enrollmentsRelations = relations(enrollments, ({ one }) => ({
+    user: one(users, {
+        fields: [enrollments.userId],
+        references: [users.id],
+    }),
+    course: one(courses, {
+        fields: [enrollments.courseId],
+        references: [courses.id],
+    }),
+}))

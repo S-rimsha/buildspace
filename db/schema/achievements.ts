@@ -1,5 +1,5 @@
 import { pgTable, text, integer, timestamp, json, uniqueIndex } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { users } from "./users";
 
 export const achievements = pgTable("achievements", {
@@ -16,3 +16,20 @@ export const userAchievements = pgTable("user_achievements", {
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     achievementId: text("achievements_id").notNull()
 })
+
+
+export const achievementsRelation = relations(achievements, ({ many }) => ({
+    users: many(userAchievements),
+}));
+
+export const userAchievementsRelations = relations(userAchievements, ({ one }) => ({
+    user: one(users, {
+        fields: [userAchievements.userId],
+        references: [users.id],
+    }
+    ),
+    achievement: one(achievements, {
+        fields: [userAchievements.achievementId],
+        references: [achievements.id],
+    })
+}));

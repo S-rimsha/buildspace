@@ -1,6 +1,7 @@
 import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
-import { title } from "process";
+import { relations, sql } from "drizzle-orm";
+import { enrollments } from "./enrollments";
+import { lessons } from "./lessons";
 
 export const courses = pgTable("courses", {
     id: text("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -12,3 +13,8 @@ export const courses = pgTable("courses", {
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const coursesRelation = relations(courses, ({ many }) => ({
+    lessons: many(lessons),
+    enrollments: many(enrollments),
+}))

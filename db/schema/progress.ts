@@ -18,3 +18,13 @@ export const progress = pgTable("progress", {
     },
 );
 
+export const progressRelations = relations(progress, ({ one }) => ({
+    user: one(users, {
+        fields: [progress.userId],
+        references: [users.id],
+    }),
+    lesson: one(lessons, {
+        fields: [progress.lessonId],
+        references: [lessons.id],
+    })
+}))
